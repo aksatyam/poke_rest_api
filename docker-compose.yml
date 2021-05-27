@@ -1,0 +1,13 @@
+version: "3.1" # version: Specifies the docker-compose version we are going to use.
+
+services:   #services: We can specify a list of services which will be deployed with our container. In our case, we want a database, which is why we use the following attribute:
+  db:       # db: We indicate that we are going to deploy a database.
+    container_name: mongoDB # container_name: This is optional, it allows us to specify a custom container name. If we omit this option, a default container name will be generated.
+    image: mongo:latest #image: Specifies the image that the container will be built from. In our case, the latest MongoDB image.
+    restart: always # restart: Always restart the container if it stops. If it is manually stopped, it is restarted only when Docker daemon restarts or the container itself is manually restarted.
+    volumes: # volumes: This is a very interesting option. It allows us to have data persistence. What does this mean? All of our data is going to be stored in a docker container. However, docker containers can be stopped, restarted etc. In such cases, what happens to our data? Does it disappear? The answer is, it won’t disappear if we use the volumes option. We can specify a directory in our local machine where our data will be stored. In our case, this directory is named “pokeData”.
+      - ./pokeData:/data/db
+    environment: # environment: We can specify environment variables. In our case, we are creating a database named “Pokemon” when the container starts.
+      - MONGO_INITDB_DATABASE= Pokemon
+    ports: # ports: Specifies the ports that will be exposed (Host port: Container port). In our case, we are mapping our local port 27017 to the container port 27017 (27017 is the default port for MongoDB).
+      - 27017:27017
