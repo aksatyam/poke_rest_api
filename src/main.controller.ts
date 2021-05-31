@@ -15,8 +15,6 @@ export class Controller {
     this.app.route("/").get(this.pokeService.welcomeMessage)
     this.app.route("/pokemons").get(this.pokeService.getAllPokemon)
     this.app.route("/pokemon").post(this.pokeService.addNewPokemon)
-
-    //Our new route
     this.app
       .route("/pokemon/:id")
       .delete(this.pokeService.deletePokemon)
